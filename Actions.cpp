@@ -662,9 +662,14 @@ bool Extension::LoadImageFile(const LPMV mV, cSurface &surf, const std::wstring&
 
 void Extension::LoadSpriteFromExternal()
 {
+	HANDLE	hf = INVALID_HANDLE_VALUE;
 	tinyxml2::XMLDocument doc;
 	int nFolder = 0;
 	int nFile = 0;
+	std::wstring ws;
+	std::wstring fullPath;
+	DWORD dwSize;
+
 	if (doc.LoadFileFromBuffer(scmlFileString.c_str()) == tinyxml2::XML_SUCCESS)
 	{
 		tinyxml2::XMLElement* root = doc.FirstChildElement("spriter_data");
@@ -674,10 +679,18 @@ void Extension::LoadSpriteFromExternal()
 			{
 				for (tinyxml2::XMLElement* fileChild = folderChild->FirstChildElement("file"); fileChild != NULL; fileChild = fileChild->NextSiblingElement("file"))
 				{
-					SpriteSource[fileChild->Attribute("name")].imageNumber = 0;
-					SpriteSource[fileChild->Attribute("name")].pObj = nullptr;
-					SpriteSource[fileChild->Attribute("name")].loaded = false;
-					SpriteSource[fileChild->Attribute("name")].external = true;
+
+					string filepath = fileChild->Attribute("name");
+					ws.assign(filepath.begin(), filepath.end());
+					fullPath = extSourcePath + ws;
+					hf = rdPtr->rHo.hoAdRunHeader->rh4.rh4Mv->mvOpenHFile(fullPath.c_str(), &dwSize, 0);
+					if (hf != INVALID_HANDLE_VALUE || !SpriteSource[fileChild->Attribute("name")].loaded)
+					{
+						SpriteSource[fileChild->Attribute("name")].imageNumber = 0;
+						SpriteSource[fileChild->Attribute("name")].pObj = nullptr;
+						SpriteSource[fileChild->Attribute("name")].loaded = false;
+						SpriteSource[fileChild->Attribute("name")].external = true;
+					}
 				}
 			}
 		}
