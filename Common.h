@@ -75,6 +75,7 @@ typedef struct
 	WORD imageNumber;
 	bool loaded;
 	bool external;
+	wstring path;
 }Sprite;
 
 #include "Extension.h"
