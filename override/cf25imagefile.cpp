@@ -34,7 +34,7 @@ namespace SpriterEngine
 				std::wstring fullPath;
 				string filepath = path();
 				ws.assign(filepath.begin(), filepath.end());
-				fullPath = ext->extSourcePath + ws;
+				fullPath = ext->SpriteSource[path()].path;
 				if (ext->LoadImageFile(rdPtr->rHo.hoAdRunHeader->rh4.rh4Mv, sprite, fullPath))
 				{
 					ext->SpriteSource[path()].loaded = true;
