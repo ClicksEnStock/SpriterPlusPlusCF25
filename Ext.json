@@ -3,7 +3,7 @@
         "Name": "Spriter Object",
         "Author": "ConceptGame",
         "Copyright": "Copyright (C) 2014 ConceptGame",
-        "Comment": "Procedural animation object based on Spriter format (v1.1)",
+        "Comment": "Procedural animation object based on Spriter format (v1.3)",
         "URL": "http://www.example.com",
         "Help": "Help/Spriter.chm",
         "Identifier": "SPRI"
